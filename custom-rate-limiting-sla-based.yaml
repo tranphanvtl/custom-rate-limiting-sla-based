@@ -1,11 +1,41 @@
 id: custom-rate-limiting-sla-based
-name: custom-rate-limiting-sla-based
-description: lorem
-category: Custom
-type: custom
+name: Custom Rate limiting - SLA based
+supportedPoliciesVersions: '>=v1'
+description: |
+  Specifies the maximum value for the number of messages processed per time period, and rejects any messages beyond the maximum.
+
+  This policy will require updates to the RAML/OAS definition in order to function.
+  You can obtain the RAML/OAS snippet and learn more [here](https://docs.mulesoft.com/anypoint-platform-for-apis/client-id-based-policies).
+category: Quality of service
+violationCategory: qos
+type: system
 resourceLevelSupported: true
-encryptionSupported: false
 standalone: true
 requiredCharacteristics: []
+isSlaBased: true
 providedCharacteristics: []
-configuration: []
+configuration:
+  - propertyName: authorizationHeaderExpression
+    name: Authorization Header Expression
+    description: Mule Expression to be used to extract the Authorization from API requests
+    type: string
+    defaultValue: "attributes.headers['Authorization']"
+    optional: false
+    sensitive: false
+    allowMultiple: false
+  - propertyName: clusterizable
+    name: Clusterizable
+    description: When using a clustered runtime with this flag enabled, configuration will be shared among all nodes.
+    type: boolean
+    optional: true
+    defaultValue: true
+    allowMultiple: false
+  - propertyName: exposeHeaders
+    name: Expose Headers
+    description: |
+            Defines if headers should be exposed in the response to the client. These headers are: x-ratelimit-remaining,
+            x-ratelimit-limit and x-ratelimit-reset.
+    type: boolean
+    optional: true
+    defaultValue: false
+    allowMultiple: false

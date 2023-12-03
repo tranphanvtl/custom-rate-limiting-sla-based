@@ -1,0 +1,11 @@
+id: custom-rate-limiting-sla-based
+name: custom-rate-limiting-sla-based
+description: lorem
+category: Custom
+type: custom
+resourceLevelSupported: true
+encryptionSupported: false
+standalone: true
+requiredCharacteristics: []
+providedCharacteristics: []
+configuration: []

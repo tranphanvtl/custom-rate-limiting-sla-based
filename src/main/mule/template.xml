@@ -13,11 +13,7 @@
 
     <throttling:config name="rateLimitSlaConfig" clusterizable="{{clusterizable}}">
         <throttling:tier-provider>
-            {{#if clientSecretExpression}}
-            <throttling:validate-client/>
-            {{else}}
             <throttling:validate-client-id/>
-            {{/if}}
         </throttling:tier-provider>
     </throttling:config>
 
@@ -29,10 +25,7 @@
                     <when expression="#[vars.authHeader.authenticationType == 'basic']">
                         <set-variable value="#[%dw 2.0&#10;import * from dw::core::Binaries&#10;output application/json&#10;var clientInfo = fromBase64(vars.authHeader.token) splitBy ':'&#10;---&#10;{&#10;    clientId: clientInfo[0],&#10;    clientSecret: clientInfo[1]&#10;}]" variableName="decodedAuthInfo"/>
                     </when>
-                    <when expression="#[vars.authHeader.authenticationType == 'bearer']">
-                        <set-variable value="#[%dw 2.0&#10;import * from dw::core::Binaries&#10;output application/json&#10;var clientInfo = fromBase64(vars.authHeader.token) splitBy ':'&#10;---&#10;{&#10;    clientId: clientInfo[0],&#10;    clientSecret: clientInfo[1]&#10;}]" variableName="decodedAuthInfo"/>
-                    </when>
-                    <otherwise >
+                    <otherwise>
                     </otherwise>      
                 </choice>
                 
